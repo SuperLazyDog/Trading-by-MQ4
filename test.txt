@@ -1,0 +1,1 @@
+this is the file a test whether change local email setting can make github identify my account correctly.
