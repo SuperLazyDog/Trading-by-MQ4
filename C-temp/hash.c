@@ -150,7 +150,7 @@ ChainHash_Node *search(const ChainHash *hashTable, const Data *data,
 bool Insert_Data_ChainHash(ChainHash *hashTable, const Data *data) {
 	ChainHash_Key key = getHashKey(data, hashTable->size);
 	ChainHash_Node *temp = hashTable->table[key];
-	ChainHash_Node *
+	//ChainHash_Node *
 
 }
 
