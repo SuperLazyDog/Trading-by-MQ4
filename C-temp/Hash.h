@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include "Bool.h"
 #include "MemorySet.h"
+#include <string.h>
+#define nil	NULL
 //---------------------------------------------------------------------------
 //                                  笔记
 //---------------------------------------------------------------------------
@@ -45,12 +47,28 @@
 //                                 哈希表
 //---------------------------------------------------------------------------
 //-------------------------------------------------------
+//                     需要自定义的函数
+//-------------------------------------------------------
+//---------------------------------------------
+//                获取哈希值的函数
+//---------------------------------------------
+ChainHash_Key getHashValue(Data *data, SIZE size)； // 测试专用
+//---------------------------------------------
+//                  数据对比函数
+//---------------------------------------------
+bool compareData_ChainHash(const ChainHash_Data *ldata, const ChianHash_Data *rdata);
+//-------------------------------------------------------
 //                       类型定义
 //-------------------------------------------------------
 //------------------------------
 //实际使用时候改变这个定义     散式哈希表处理的数据类型
 typedef Human ChainHash_Data;
 //------------------------------
+typedef int INT;
+typedef INT SIZE, LENGTH;
+typedef SIZE Size;
+typedef LENGTH Length;
+typedef ChainHash_Key INT;//对哈希值的定义
 typedef struct __chainHash_Node { // 哈希表的节点
 	ChainHash_Data data; // 存放的数据
 	struct __chainHash_Node *next; // 同一哈希值的下一个节点的指针
@@ -67,9 +85,15 @@ typedef struct { // 哈希表
 void chainHashTest();
 
 //-------------------------------------------------------
+//                       初始化
+//-------------------------------------------------------
+bool initialize_ChainHash(ChainHash *hashTable, SIZE size); // 初始化链式哈希表
+
+//-------------------------------------------------------
 //                        检索
 //-------------------------------------------------------
-ChainHash_Node *search(const ChainHash *hashTable, const Data *data);
+//ChainHash_Node *search(const ChainHash *hashTable, const Data *data);
+ChainHash_Node *search(const ChainHash *hashTable, const Data *data, ChainHash_Key getHashKey(Data *data, int size), bool compareData_HashChain(const ChainHash_Data *ldata, const ChianHash_Data *rdata)) 
 
 //-------------------------------------------------------
 //                        追加

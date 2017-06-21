@@ -12,8 +12,17 @@
 //                                  笔记
 //---------------------------------------------------------------------------
 /*---------------------------------------------------------------------------
+
 　散式哈希表： 每一个哈希值对应的桶为链表的头节点
             重复哈希值在桶里往后走
+
+ -------------------------------------------------
+ 
+ 哈希表无限大的话，不会有冲突，但是内存消耗太大。
+
+ 哈希表大小一般指定素数。
+
+　-------------------------------------------------
 
  双重指针： 指向地址的指针
      注意： 指针是一种独特的数据类型，不能直接和int划等号。
@@ -32,6 +41,11 @@
 		int *b = a + 1;
 		int *c = a -1;
 		int **d = &a;// d + 1 = b; d - 1 = c;
+
+	注: 指针的初始化指的是初始化指针所指的地址，指针本身自带地址，不用初始化
+
+　-------------------------------------------------
+
  ---------------------------------------------------------------------------*/
 
 
@@ -39,12 +53,53 @@
 //                                 哈希表
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
+//                           测试专用--自定义函数的实现
+//---------------------------------------------------------------------------
+//---------------------------------------------
+//                获取哈希值的函数
+//---------------------------------------------
+ChainHash_Key getHashKey(Data *data, int size) {
+	return strlen(data->name) % size;
+}
+//---------------------------------------------
+//                  数据对比函数
+//---------------------------------------------
+bool compareData_ChainHash(const ChainHash_Data *ldata, const ChianHash_Data *rdata) {
+	if(strcmp(ldata->name, rdata->name) == 0) {
+		return true;
+	}else {
+		return false;
+	}
+}
+
+//---------------------------------------------------------------------------
 //                               本地函数声明
 //---------------------------------------------------------------------------
-//-------------------------------------------------------
-//                      共有变量
-//-------------------------------------------------------
+//---------------------------------------------
+//                设置哈希值的函数
+//---------------------------------------------
 
+//---------------------------------------------
+//                设置数据对比函数
+//---------------------------------------------
+
+//---------------------------------------------
+//                  设置节点
+//---------------------------------------------
+static bool setChainHash_Node(ChainHash_Node *node, const Data *data, const ChainHash_Node *next) {
+	node->data = *data;
+	node->next = next;
+	return true;
+}
+
+
+//---------------------------------------------------------------------------
+//                                共有变量
+//---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//                                API函数
+//---------------------------------------------------------------------------
 //-------------------------------------------------------
 //                     管理测试的函数
 //-------------------------------------------------------
@@ -52,32 +107,78 @@ void chainHashTest() {
 }
 
 //-------------------------------------------------------
+//                       初始化
+//-------------------------------------------------------
+bool initialize_ChainHash(ChainHash *hashTable, SIZE size) { // 初始化链式哈希表
+	int i;
+	hashTable->table = mallocPro(hashTable, sizeof(ChainHash_Node), GETSTR_MEMSET);
+	// !! # TODO: 为什么不先判断hashTable是否存在
+	if(hashTable == NULL) {
+		h->size = 0; //带入零，防止误操作
+		return false;
+	}
+	h->size = size;
+	for(i = 0; i < size; i++) {
+		h->table[i] = NULL;
+	}
+	return true;
+}
+
+//-------------------------------------------------------
 //                        检索
 //-------------------------------------------------------
-ChainHash_Node *search(const ChainHash *hashTable, const Data *data);
+ChainHash_Node *search(const ChainHash *hashTable, const Data *data, 
+	                   ChainHash_Key getHashKey(Data *data, int size), 
+					   bool compareData_ChainHash(const ChainHash_Data *ldata, const ChianHash_Data *rdata)) {
+	//ChainHash_Key key = getHashKey(data, hashTable->size);
+	ChainHash_Key key = getHashKey(data, hashTable->size);
+	ChainHash_Node *temp = h->table[key];
+
+	while(temp != NULL) {
+		if(compareData_ChainHash(data, temp->data) { 
+			return temp;
+		}
+		temp = temp->next;
+	}
+
+	return false;
+}
 
 //-------------------------------------------------------
 //                        追加
 //-------------------------------------------------------
-bool Insert_Data_ChainHash(ChainHash *hashTable, const Data *data);
+bool Insert_Data_ChainHash(ChainHash *hashTable, const Data *data) {
+	ChainHash_Key key = getHashKey(data, hashTable->size);
+	ChainHash_Node *temp = hashTable->table[key];
+	ChainHash_Node *
+
+}
 
 //-------------------------------------------------------
 //                        删除
 //-------------------------------------------------------
-bool delete_Data_ChainHash(ChainHash *hashTable, const Data *data);
+bool delete_Data_ChainHash(ChainHash *hashTable, const Data *data) {
+
+}
 
 //-------------------------------------------------------
 //                        Dump
 //-------------------------------------------------------
-void dump_ChainHash(const ChainHash *hashTable);
+void dump_ChainHash(const ChainHash *hashTable) {
+
+}
 
 //-------------------------------------------------------
 //                       全部删除
 //-------------------------------------------------------
-void clear(ChainHash *hashTable);
+void clear(ChainHash *hashTable) {
+
+}
 
 //-------------------------------------------------------
 //                      收尾（全删除）
 //-------------------------------------------------------
-void terminate_ChainHash(ChainHash *hashTable);
+void terminate_ChainHash(ChainHash *hashTable) {
+
+}
 
