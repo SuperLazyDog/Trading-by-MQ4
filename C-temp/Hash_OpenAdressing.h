@@ -25,7 +25,7 @@
 */
 
 //---------------------------------------------------------------------------
-//                                 哈希表
+//                              开放寻址哈希表
 //---------------------------------------------------------------------------
 //-------------------------------------------------------
 //                     需要自定义的函数
@@ -33,7 +33,11 @@
 //---------------------------------------------
 //                获取哈希值的函数
 //---------------------------------------------
-OpenAdressingHash_Key getHashKey(const OpenAdressingHash_Data *data, SIZE size); // 测试专用
+OpenAdressingHash_Key getHashKey_OpenAdressingHash(const OpenAdressingHash_Data *data, SIZE size); // 测试专用
+//---------------------------------------------
+//                再次哈希值的函数
+//---------------------------------------------
+OpenAdressingHash_Key getReHashKey_OpenAdressingHash(const OpenAdressingHash_Key key, SIZE size);
 //---------------------------------------------
 //                  数据对比函数
 //---------------------------------------------
@@ -60,7 +64,7 @@ typedef enum {
 	deleted
 } Status_OpenAdressingHash;
 
-typedef OpenAdressingHash_Key INT;//对哈希值的定义
+typedef INT OpenAdressingHash_Key;//对哈希值的定义
 
 typedef struct __OpenAdressingHash_Node { // 开放寻址哈希表的桶
 	ChainHash_Data data; // 存放的数据
@@ -68,7 +72,7 @@ typedef struct __OpenAdressingHash_Node { // 开放寻址哈希表的桶
 } OpenAdressingHash_Bucket;
 
 typedef struct { // 开放寻址哈希表
-	int size; // 容量
+	Size size; // 容量
 	OpenAdressingHash_Bucket *table; // 开放寻址哈希表开头的指针
 } OpenAdressingHash;
 
@@ -86,7 +90,10 @@ bool initialize_OpenAdressingHash(OpenAdressingHash *hashTable, SIZE size); // �
 //                        检索
 //-------------------------------------------------------
 //ChainHash_Node *search(const ChainHash *hashTable, const Data *data);
-OpenAdressingHash_Bucket *search(const OpenAdressingHash *hashTable, const OpenAdressingHash_Data *data, OpenAdressingHash_Key getHashKey(const OpenAdressingHash_Data *data, SIZE size), bool compareData_OpenAdressingHash(const OpenAdressingHash_Data *ldata, const OpenAdressingHash_Data *rdata));
+OpenAdressingHash_Bucket *search(const OpenAdressingHash *hashTable, const OpenAdressingHash_Data *data, 
+		OpenAdressingHash_Key getHashKey_OpenAdressingHash(const OpenAdressingHash_Data *data, SIZE size), 
+		OpenAdressingHash_Key getReHashKey_OpenAdressingHash(const OpenAdressingHash_Key key, SIZE size)
+		bool compareData_OpenAdressingHash(const OpenAdressingHash_Data *ldata, const OpenAdressingHash_Data *rdata));
 
 //-------------------------------------------------------
 //                        追加
@@ -106,7 +113,7 @@ void dump_OpenAdressingHash(const OpenAdressingHash *hashTable);
 //-------------------------------------------------------
 //                       全部删除
 //-------------------------------------------------------
-void clear(OpenAdressingHash *hashTable);
+void clear_OpenAdressingHash(OpenAdressingHash *hashTable);
 
 //-------------------------------------------------------
 //                      收尾（全删除）
