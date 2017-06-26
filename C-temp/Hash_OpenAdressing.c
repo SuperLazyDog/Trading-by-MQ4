@@ -95,7 +95,7 @@ static bool setNode_OpenAdressingHash(OpenAdressingHash_Bucket *bucket, const Op
 //                                API函数
 //---------------------------------------------------------------------------
 //# TODO: 返回结果不用bool，改用enum
-//# TODO: 改用函数指针
+//# TODO: 改用函数指针     changed--------->  全部放弃函数指针
 //# TODO: terminate要清楚哈希表管理器指向的内存  ChainHash
 //-------------------------------------------------------
 //                     管理测试的函数
