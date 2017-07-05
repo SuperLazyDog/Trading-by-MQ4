@@ -518,4 +518,4 @@ bower.json
 *.zip
 *.pdf
 *.ex4
-output/
+#output/
